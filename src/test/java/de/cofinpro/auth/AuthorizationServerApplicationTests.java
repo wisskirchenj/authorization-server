@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@SpringBootTest(properties = { "spring.datasource.url=jdbc:postgresql://localhost:5432/userstest" })
 class AuthorizationServerApplicationTests {
 
     @Autowired
