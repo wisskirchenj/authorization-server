@@ -25,6 +25,8 @@ repositories {
     mavenCentral()
 }
 
+extra["hibernate.version"] = "6.1.7.Final" // temporary, I hope
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
