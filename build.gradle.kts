@@ -1,15 +1,15 @@
-import org.gradle.internal.classpath.Instrumented
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     java
     id("org.springframework.boot") version "3.1.1"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("io.spring.dependency-management") version "1.1.1"
     id("org.graalvm.buildtools.native") version "0.9.23"
 }
 
 group = "de.cofinpro"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.2-SNAPSHOT"
+val dockerHubRepo = "wisskirchenj/"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -24,8 +24,6 @@ configurations {
 repositories {
     mavenCentral()
 }
-
-extra["hibernate.version"] = "6.1.7.Final" // temporary, I hope
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
@@ -46,7 +44,7 @@ tasks.withType<Test> {
 }
 
 tasks.named<BootBuildImage>("bootBuildImage") {
-    Instrumented.systemProperty("spring.profiles.active", "k8s")
     builder.set("dashaun/builder:tiny")
+    imageName.set(dockerHubRepo + rootProject.name + ":" + version)
     environment.put("BP_NATIVE_IMAGE", "true")
 }
