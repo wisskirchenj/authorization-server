@@ -21,6 +21,6 @@ public class HibernateProxyRegistrar implements RuntimeHintsRegistrar {
                 DomainQueryExecutionContext.class,
                 SelectionQuery.class,
                 CommonQueryContract.class
-                );
+        );
     }
 }
