@@ -2,9 +2,9 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     java
-    id("org.springframework.boot") version "3.1.5"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("org.graalvm.buildtools.native") version "0.9.28"
+    id("org.springframework.boot") version "3.2.4"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("org.graalvm.buildtools.native") version "0.10.1"
 }
 
 group = "de.cofinpro"
@@ -12,7 +12,7 @@ version = "0.1.2-SNAPSHOT"
 val dockerHubRepo = "wisskirchenj/"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -44,8 +44,9 @@ tasks.withType<Test> {
 }
 
 tasks.named<BootBuildImage>("bootBuildImage") {
-    builder.set("dashaun/builder:tiny")
+//    buildpacks.set(listOf("paketobuildpacks/java:beta"))
+    buildpacks.set(listOf("paketobuildpacks/java-native-image:beta"))
+    builder.set("paketobuildpacks/builder-jammy-buildpackless-tiny")
     imageName.set(dockerHubRepo + rootProject.name + ":" + version)
     createdDate.set("now")
-    environment.put("BP_NATIVE_IMAGE", "true")
 }
